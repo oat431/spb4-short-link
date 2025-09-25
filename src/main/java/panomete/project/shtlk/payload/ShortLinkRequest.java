@@ -4,6 +4,7 @@ import panomete.project.shtlk.entity.LinkType;
 
 public record ShortLinkRequest(
         LinkType type,
-        String originalLink
+        String originalLink,
+        String customAlias
 ) {
 }

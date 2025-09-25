@@ -13,9 +13,11 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
+@Builder
 @RequiredArgsConstructor
 @Table(name = "tb_short_link")
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
 public class ShortLink {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
