@@ -18,6 +18,9 @@ public class ShortLinkServiceImpl implements ShortLinkService {
     @Override
     public ShortLinkResponse createShortLink(ShortLinkRequest request) {
         if(request.type() == LinkType.CUSTOM){
+            if(isLinkExist(request.customAlias(), LinkType.CUSTOM.name())){
+                throw new IllegalArgumentException("Custom alias already exists");
+            }
             ShortLink shortLink = ShortLink.builder()
                     .originalUrl(request.originalLink())
                     .shortUrl(request.customAlias())
@@ -32,6 +35,9 @@ public class ShortLinkServiceImpl implements ShortLinkService {
         }
         // generate random short link
         String randomShortLink = generateRandomString();
+        while(isLinkExist(randomShortLink, LinkType.RANDOM.name())){
+            randomShortLink = generateRandomString();
+        }
         ShortLink shortLink = ShortLink.builder()
                 .originalUrl(request.originalLink())
                 .shortUrl(randomShortLink)

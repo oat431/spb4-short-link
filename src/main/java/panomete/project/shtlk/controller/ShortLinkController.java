@@ -19,29 +19,6 @@ public class ShortLinkController {
 
     private final ShortLinkService shortLinkService;
 
-    // redirect to original URL
-    @Operation(summary = "Redirect to original URL")
-    @GetMapping("/{type}/{short-link}")
-    public RedirectView redirectToOriginalUrl(
-            @PathVariable("type") String type,
-            @PathVariable("short-link") String shortLink
-    ) {
-        LinkType linkType = null;
-        if (type.equals("r")) {
-            linkType = LinkType.RANDOM;
-        } else if (type.equals("c")) {
-            linkType = LinkType.CUSTOM;
-        } else {
-            throw new IllegalArgumentException("Invalid link type");
-        }
-        ShortLinkResponse response = shortLinkService.getShortLink(shortLink, linkType.name());
-        if (response == null) {
-            throw new IllegalArgumentException("Short link not found");
-        }
-        // todo: implement redirect logic
-        return new RedirectView(response.originalLink());
-    }
-
     // create short link
     @Operation(summary = "Create short link")
     @PostMapping("/api/v1/short-link")
