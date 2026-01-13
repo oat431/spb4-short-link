@@ -10,3 +10,6 @@ spring:
     hibernate:
       ddl-auto: update
     database: postgresql
+server:
+  address: "localhost"
+  port: 8080

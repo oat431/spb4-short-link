@@ -1,9 +1,11 @@
 package panomete.project.shtlk.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import panomete.project.shtlk.entity.LinkType;
 import panomete.project.shtlk.entity.ShortLink;
+import panomete.project.shtlk.payload.ShortLinkListResponse;
 import panomete.project.shtlk.payload.ShortLinkRequest;
 import panomete.project.shtlk.payload.ShortLinkResponse;
 import panomete.project.shtlk.repository.ShortLinkRepository;
@@ -14,6 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShortLinkServiceImpl implements ShortLinkService {
     private final ShortLinkRepository shortLinkRepository;
+
+    @Value("${server.address}")
+    private String hostname;
+
+    @Value("${server.port}")
+    private String port;
 
     @Override
     public ShortLinkResponse createShortLink(ShortLinkRequest request) {
@@ -62,8 +70,13 @@ public class ShortLinkServiceImpl implements ShortLinkService {
     }
 
     @Override
-    public List<ShortLinkResponse> getAllShortLink() {
-        return List.of();
+    public List<ShortLinkListResponse> getAllShortLink() {
+        List<ShortLink> shortLinks = shortLinkRepository.findAll();
+        String domain = hostname + ":" + port;
+        return shortLinks.stream().map(shortLink -> new ShortLinkListResponse(
+                domain + "/api/v1/redirect/" + (shortLink.getType().name().equals("RANDOM") ? "r" : "c") + "/" + shortLink.getShortUrl(),
+                shortLink.getOriginalUrl()
+        )).toList();
     }
 
     @Override
