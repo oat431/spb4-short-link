@@ -96,4 +96,10 @@ public class ShortLinkServiceImpl implements ShortLinkService {
                 shortLinkEntity.getType().name()
         );
     }
+
+    // temporary password confirmation
+    @Override
+    public boolean confirmAction(String password) {
+        return password.equals("sh0r7L1nk@dm1n");
+    }
 }

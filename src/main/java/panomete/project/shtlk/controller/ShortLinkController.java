@@ -5,8 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-import panomete.project.shtlk.entity.LinkType;
+import panomete.project.shtlk.payload.ConfirmPasswordRequest;
 import panomete.project.shtlk.payload.ShortLinkListResponse;
 import panomete.project.shtlk.payload.ShortLinkRequest;
 import panomete.project.shtlk.payload.ShortLinkResponse;
@@ -37,6 +36,19 @@ public class ShortLinkController {
     @GetMapping
     public ResponseEntity<List<ShortLinkListResponse>> getAllShortLinks() {
         return ResponseEntity.ok(shortLinkService.getAllShortLink());
+    }
+
+    @PostMapping("/confirm")
+    @Operation(summary = "Confirm action with password")
+    public ResponseEntity<Boolean> confirmAction(
+            @RequestBody ConfirmPasswordRequest request
+    ) {
+        boolean isConfirmed = shortLinkService.confirmAction(request.password());
+        if(isConfirmed) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(401).body(false);
+        }
     }
 
 }

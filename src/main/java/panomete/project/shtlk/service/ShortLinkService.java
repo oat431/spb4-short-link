@@ -11,4 +11,5 @@ public interface ShortLinkService {
     List<ShortLinkListResponse> getAllShortLink();
     boolean isLinkExist(String shortLink, String linkType);
     ShortLinkResponse getShortLink(String shortLink, String linkType);
+    boolean confirmAction(String password);
 }
