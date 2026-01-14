@@ -74,7 +74,7 @@ public class ShortLinkServiceImpl implements ShortLinkService {
         List<ShortLink> shortLinks = shortLinkRepository.findAll();
         String domain = hostname + ":" + port;
         return shortLinks.stream().map(shortLink -> new ShortLinkListResponse(
-                domain + "/api/v1/redirect/" + (shortLink.getType().name().equals("RANDOM") ? "r" : "c") + "/" + shortLink.getShortUrl(),
+                domain + "/" + (shortLink.getType().name().equals("RANDOM") ? "r" : "c") + "/" + shortLink.getShortUrl(),
                 shortLink.getOriginalUrl()
         )).toList();
     }

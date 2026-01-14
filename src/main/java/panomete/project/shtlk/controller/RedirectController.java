@@ -15,8 +15,8 @@ import panomete.project.shtlk.service.ShortLinkService;
 public class RedirectController {
     private final ShortLinkService shortLinkService;
 
-    @GetMapping("api/v1/redirect/{type}/{short-link}") // development
-//    @GetMapping("/{type}/{short-link}") // production
+//    @GetMapping("api/v1/redirect/{type}/{short-link}") // development
+    @GetMapping("/{type}/{short-link}") // production
     @Operation(summary = "Redirect to original URL")
     public ResponseEntity<Void> redirectToOriginalUrl(
             @PathVariable("type") String type,
