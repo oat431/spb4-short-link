@@ -17,14 +17,8 @@ import java.util.List;
 public class ShortLinkServiceImpl implements ShortLinkService {
     private final ShortLinkRepository shortLinkRepository;
 
-    @Value("${server.address}")
-    private String hostname;
-
-    @Value("${server.port}")
-    private String port;
-
-    private final String protocal = "http://"; // for local testing only
-    // private final String protocal = "https://"; // for production
+    @Value("${global.address}")
+    private String address;
 
     @Override
     public ShortLinkResponse createShortLink(ShortLinkRequest request) {
@@ -75,9 +69,8 @@ public class ShortLinkServiceImpl implements ShortLinkService {
     @Override
     public List<ShortLinkListResponse> getAllShortLink() {
         List<ShortLink> shortLinks = shortLinkRepository.findAll();
-        String domain = protocal + hostname + ":" + port;
         return shortLinks.stream().map(shortLink -> new ShortLinkListResponse(
-                domain + "/" + (shortLink.getType().name().equals("RANDOM") ? "r" : "c") + "/" + shortLink.getShortUrl(),
+                address + "/" + (shortLink.getType().name().equals("RANDOM") ? "r" : "c") + "/" + shortLink.getShortUrl(),
                 shortLink.getOriginalUrl()
         )).toList();
     }

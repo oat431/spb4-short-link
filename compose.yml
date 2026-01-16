@@ -1,0 +1,18 @@
+services:
+  identity:
+    build: .
+    image: panomete-short-link
+    container_name: panomete-short-link
+    restart: always
+    ports:
+      - "8002:8002"
+    environment:
+      - DB_URI=jdbc:postgresql://local-postgres:5432/db_short_link
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - HOST=https://short.panomete.com
+    networks:
+      - postgres-network
+networks:
+  postgres-network:
+    external: true

@@ -8,7 +8,7 @@ spring:
     ansi:
       enabled: always
   profiles:
-    active: local
+    active: server
 
 springdoc:
   api-docs:

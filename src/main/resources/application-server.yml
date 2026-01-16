@@ -2,21 +2,24 @@ spring:
   application:
     name: short link application local environment
   datasource:
-    url: jdbc:postgresql://localhost:5432/db_short_link
-    username: postgres
-    password: postgres
+    url: ${DB_URI:jdbc:postgresql://localhost:5432/db_short_link}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     database: postgresql
 
+server:
+  port: 8002
+
 global:
-  address: http://localhost:8080
+  address: ${HOST:http://localhost:8002}
 
 management:
   endpoints:
     web:
       cors:
-        allowed-origins: http://localhost:5500
+        allowed-origins: ${HOST:http://localhost:5500}
         allowed-methods: GET, OPTIONS, POST, PUT, DELETE
