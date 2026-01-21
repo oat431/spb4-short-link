@@ -13,7 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
 
     private final String[] allowedOrigins = {
             "http://localhost:3000",
-            "http://localhost:5500"
+            "http://localhost:5500",
+            "https://short.panomete.com"
     };
 
     @Override
