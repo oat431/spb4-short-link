@@ -12,7 +12,7 @@ spring:
     database: postgresql
 
 global:
-  address: http://localhost:8080
+  address: http://localhost:8002
 
 management:
   endpoints:

@@ -27,6 +27,9 @@ public class ShortLinkController {
     public ResponseEntity<ShortLinkResponse> createShortLink(
             @RequestBody ShortLinkRequest request
     ) {
+        if(!isUrlValid(request.originalLink())) {
+            return ResponseEntity.badRequest().body(null);
+        }
         ShortLinkResponse response = shortLinkService.createShortLink(request);
         return ResponseEntity.ok(response);
     }
@@ -49,6 +52,11 @@ public class ShortLinkController {
         } else {
             return ResponseEntity.status(401).body(false);
         }
+    }
+
+    private boolean isUrlValid(String url) {
+        String urlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\\\\\w \\.-]*)*\\/?$";
+        return url.matches(urlRegex);
     }
 
 }
